@@ -142,3 +142,25 @@ function reverseString(string) {
     console.log(rest);
     return current.concat(reverseString(rest));
 }
+
+function nestedEvenSum(obj) {
+    // Initialize sum accumulator
+    let sum = 0;
+    // Loop over all key-value pairs in obj
+    for (let key in obj) {
+        // Declare variable for current value
+        let value = obj[key];
+        // If it is a nested loop, recursively check it
+        if (typeof(value) === 'object' && value !== null && !Array.isArray(value)) {
+            sum += nestedEvenSum(value);
+        }
+        // Otherwise, check if it is a number
+        if (Number.isInteger(value)) {
+            // If a number, check for evenness and add to sum
+            if (value % 2 === 0) {
+                sum += value;
+            }
+        }
+    }
+    return sum;
+};
