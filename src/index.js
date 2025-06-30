@@ -164,3 +164,63 @@ function nestedEvenSum(obj) {
     }
     return sum;
 };
+
+function deepEvenSum(input) {
+    // Initialize sum accumulator
+    let sum = 0;
+    // Check if input is of type object
+    if (typeof(input) === 'object' && input !== null) {
+        // Check if it is an array, recurse with for...of
+        if (Array.isArray(input)) {
+            for (let value of input) {
+                sum += deepEvenSum(value);
+            }
+        } else {
+            // If not array, is regular object = for...in
+            for (let key in input) {
+                let value = input[key];
+                sum += deepEvenSum(value);
+                }
+        }
+    // If not an object, check for even number and add
+    } else if (Number.isInteger(input) && input % 2 === 0) {
+        sum += input;
+    }
+    // Return total sum at end of recursion
+    return sum;
+};
+
+function getFirstNPrimes(n) {
+    // Initialize counter to keep track of numbers printed
+    let counter = 0;
+    // Initialize number to start checking from
+    let num = 2;
+    // Initialize array to store primes
+    let firstNPrimes = [];
+    // Loop until counter has hit n prints
+    while (counter < n) {
+        if(isPrime(num)) {
+            firstNPrimes.push(num);
+            counter++;
+        }
+        num++;
+    }
+    return firstNPrimes;
+};
+
+// Helper function for getFirstPrimes()
+function isPrime(n) {
+    // Safety check for number equal to or less than 1
+    if (n <= 1) return false;
+    // 2 is the first prime number, no integers between it and 1
+    if (n === 2) return true;
+    // Check for evenness which disqualifies, only check odds after
+    if (n % 2 === 0) return false;
+    // Otherwise, check all numbers between 1 and the target for being divisible
+    for (let i = 3; i <= Math.sqrt(n); i += 2) {
+        if(n % i == 0) return false;
+    };
+    // If it was not divisible by any, is a prime, return true
+    return true;
+};
+
